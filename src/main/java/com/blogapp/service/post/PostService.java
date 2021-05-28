@@ -10,6 +10,7 @@ public interface PostService {
 
     Post savePost(PostDto postDto);
 
+
     List<Post> findAllPosts();
 
     Post updatePost(PostDto postDto);
