@@ -35,7 +35,7 @@ class PostRepositoryTest {
     }
 
     @Test
-    void savePostToDBTest(){
+    void savePostToDBTest() {
 
         Post blogPost = new Post();
         blogPost.setTitle("What is Fintech");
@@ -49,8 +49,9 @@ class PostRepositoryTest {
 
 
     }
+
     @Test
-    void throwExceptionWhenSavingPostWithoutDuplicateTitle(){
+    void throwExceptionWhenSavingPostWithoutDuplicateTitle() {
         Post blogPost = new Post();
         blogPost.setTitle("What is Fintech");
         blogPost.setContent("Lorem ipsium is simply dummy test for printing and typing");
@@ -63,14 +64,13 @@ class PostRepositoryTest {
         blogPost2.setTitle("What is Fintech");
         blogPost2.setContent("Lorem ipsium is simply dummy text for of the printing and typing");
         log.info("created a blog post --> {}", blogPost2);
-        assertThrows(DataIntegrityViolationException.class, ()-> postRepository.save(blogPost2));
-
+        assertThrows(DataIntegrityViolationException.class, () -> postRepository.save(blogPost2));
 
 
     }
 
     @Test
-    void whenPostIsSaved_thenSaveAuthor(){
+    void whenPostIsSaved_thenSaveAuthor() {
 
         Post blogPost = new Post();
         blogPost.setTitle("What is Fintech");
@@ -79,11 +79,11 @@ class PostRepositoryTest {
         log.info("created a blog post --> {}", blogPost);
 
 
-    Author author = new Author();
-    author.setFirstName("john");
-    author.setLastName("Wick");
-    author.setEmail("john@mail.com");
-    author.setPhoneNumber("09056790444");
+        Author author = new Author();
+        author.setFirstName("john");
+        author.setLastName("Wick");
+        author.setEmail("john@mail.com");
+        author.setPhoneNumber("09056790444");
 
         //map relationships
         blogPost.setAuthor(author);
@@ -92,11 +92,15 @@ class PostRepositoryTest {
         postRepository.save(blogPost);
         log.info("Blog post after saving --> {}", blogPost);
 
+        Post savedPost = postRepository.findByPostTitle("What is Fintech?");
+        assertThat(savedPost.getTitle()).isEqualTo("What is Fintech?");
+
+
     }
 
 
     @Test
-    void findAllPostInTheDbTest(){
+    void findAllPostInTheDbTest() {
         List<Post> existingPosts = postRepository.findAll();
         assertThat(existingPosts).isNotNull();
         assertThat(existingPosts).hasSize(5);
@@ -107,39 +111,39 @@ class PostRepositoryTest {
     @Test
 
     @Rollback(value = false)
-    void deletePostTest(){
+    void deletePostTest() {
 
         Post savedPost = postRepository.findById(41).orElse(null);
         assertThat(savedPost).isNotNull();
 
-        log.info("Post fetched from the database --> {}",savedPost);
+        log.info("Post fetched from the database --> {}", savedPost);
         //delete post
         postRepository.deleteById(savedPost.getId());
 
-        Post deletedPost= postRepository.findById(41).orElse(null);
+        Post deletedPost = postRepository.findById(41).orElse(null);
         assertThat(deletedPost).isNull();
 
     }
 
     @Test
-    void updateSavedPostTitleTest(){
+    void updateSavedPostTitleTest() {
 
-    Post savedPost = postRepository.findById(41).orElse(null);
-    assertThat(savedPost).isNotNull();
-    assertThat(savedPost.getTitle()).isEqualTo("title post 1");
+        Post savedPost = postRepository.findById(41).orElse(null);
+        assertThat(savedPost).isNotNull();
+        assertThat(savedPost.getTitle()).isEqualTo("title post 1");
 
-    savedPost.setTitle("Pentax Post Title");
-    postRepository.save(savedPost);
+        savedPost.setTitle("Pentax Post Title");
+        postRepository.save(savedPost);
 
-    Post updatedPost = postRepository.findById(savedPost.getId()).orElse(null);
-    assertThat(updatedPost).isNotNull();
-    assertThat(updatedPost.getTitle()).isEqualTo("Pentax Post Title");
+        Post updatedPost = postRepository.findById(savedPost.getId()).orElse(null);
+        assertThat(updatedPost).isNotNull();
+        assertThat(updatedPost.getTitle()).isEqualTo("Pentax Post Title");
 
     }
 
     @Test
     @Rollback(value = false)
-    void updatePostAuthorTest(){
+    void updatePostAuthorTest() {
 
         Post savedPost = postRepository.findById(41).orElse(null);
         assertThat(savedPost).isNotNull();
@@ -162,30 +166,30 @@ class PostRepositoryTest {
         assertThat(updatedPost.getAuthor()).isNotNull();
         assertThat(updatedPost.getAuthor().getLastName()).isEqualTo("Brown");
 
-        log.info("Updated Post --> {}",updatedPost);
+        log.info("Updated Post --> {}", updatedPost);
     }
 
     @Test
     @Rollback(value = false)
-    void addCommentToPostTest(){
-       //Fetch post from Db
-        Post savedPost= postRepository.findById(43).orElse(null);
+    void addCommentToPostTest() {
+        //Fetch post from Db
+        Post savedPost = postRepository.findById(43).orElse(null);
         assertThat(savedPost).isNotNull();
         assertThat(savedPost.getComment()).hasSize(0);
 
 
         //create a comment object
-        Comment comment1 = new Comment("job","Really insightfull post");
-        Comment comment2 = new Comment("Billy","Nice One");
+        Comment comment1 = new Comment("job", "Really insightfull post");
+        Comment comment2 = new Comment("Billy", "Nice One");
 
 
         //map the post and comments
-        savedPost.addComment(comment1,comment2);
+        savedPost.addComment(comment1, comment2);
 
         //save comment
         postRepository.save(savedPost);
 
-        Post commentedPost  = postRepository.findById(savedPost.getId()).orElse(null);
+        Post commentedPost = postRepository.findById(savedPost.getId()).orElse(null);
         assertThat(commentedPost).isNotNull();
         assertThat(commentedPost.getComment()).hasSize(2);
         log.info("commented post --> {}", commentedPost);
@@ -194,7 +198,6 @@ class PostRepositoryTest {
     }
 
 
-
-
-
 }
+
+
