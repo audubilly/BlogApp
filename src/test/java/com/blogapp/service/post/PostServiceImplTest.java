@@ -14,6 +14,9 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class PostServiceImplTest {
 
     @Mock
@@ -38,4 +41,12 @@ class PostServiceImplTest {
         verify(postRepository, times(1)).save(testPost);
     }
 
+    @Test
+    void whenTheFindAllMethodIsCalledThenReturnListsOfPosts(){
+        List<Post> postList = new ArrayList<>();
+        when(postServiceImpl.findAllPosts()).thenReturn(postList);
+        postServiceImpl.findAllPosts();
+
+        verify(postRepository,times(1)).findAll();
+    }
 }
