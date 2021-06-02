@@ -46,4 +46,23 @@ class CloudinaryCloudStorageServiceImplTest {
             log.error("Error occurred --> {}", e.getMessage());
         }
     }
+
+    @Test
+    void upLoadMultipartImageTest() {
+        //define a file
+        File file = new File("C:\\Users\\USER\\Downloads\\blogapp\\blogapp\\" +
+                "src\\main\\resources\\static\\asset\\images\\blog-image1.jpg");
+
+        assertThat(file.exists()).isTrue();
+
+        Map<Object, Object> params = new HashMap<>();
+        params.put("folder","blogapp");
+        params.put("overwrite","true");
+
+        try {
+            cloudStorageServiceImpl.uploadImage(file,params);
+        } catch (IOException e) {
+            log.error("Error occurred --> {}", e.getMessage());
+        }
+    }
 }
