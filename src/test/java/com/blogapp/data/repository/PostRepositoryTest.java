@@ -194,10 +194,27 @@ class PostRepositoryTest {
         assertThat(commentedPost.getComment()).hasSize(2);
         log.info("commented post --> {}", commentedPost);
 
+    }
+
+    @Test
+    @Rollback(value = false)
+    void findAllPostInDescendingOrderTest(){
+
+        List<Post> allPosts = postRepository.findByOrderByDateCreatedDesc();
+        assertThat(allPosts).isNotNull();
+        log.info("All posts --> {}", allPosts);
+
+        assertTrue(allPosts.get(0).getDateCreated().isAfter(allPosts.get(1).getDateCreated()));
+//        assertFalse(allPosts.get(1).getDateCreated().isBefore(allPosts.get(0).getDateCreated()));
+
+        allPosts.forEach(post -> {
+            log.info("Post Date {}", post.getAuthor() );
+        });
+    }
+
 
     }
 
 
-}
 
 

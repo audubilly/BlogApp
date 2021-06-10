@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -60,13 +60,18 @@
             <div class="post-content">
                 <p th:text="${post.content}"></p>
             </div>
-            <a href="/asset/pages/post.html">
+
+        <a th:href="@{/posts/info/{postId}(postId = ${post.id})}">
                 <button class="view-post">
                     continue reading
                 </button>
             </a>
         </div>
+
+        <div class="diff"></div>
     </div>
+
+
     <!--   Blog post end-->
 
     <!-- Footer -->
