@@ -18,37 +18,36 @@ class
 BlogappApplicationTests {
 
 	@Autowired
-	DataSource dataSource ;
+	DataSource dataSource;
 
-	@Autowired
-	TestDataSource testDataSource;
+//	@Autowired
+//	TestDataSource testDataSource;
 
 
 	@Test
-	void applicationCanConnectToDatabaseTest(){
+	void applicationCanConnectToDatabaseTest() {
 		assertThat(dataSource).isNotNull();
 		log.info("Datasource object is created");
 
 
-		try(Connection connection = dataSource.getConnection()){
+		try (Connection connection = dataSource.getConnection()) {
 			assertThat(connection).isNotNull();
 			assertThat(connection.getCatalog()).isEqualTo("blogdb");
 			log.info("Connection --> {}", connection.getCatalog());
 
 
-
-		}catch (SQLException throwables){
+		} catch (SQLException throwables) {
 			log.info("Exception occurred while connecting to the database --> {}",
 					throwables.getMessage());
-
-
 		}
 	}
 
-	@Test
-	void readValuesFromPropertiesTest(){
-
-		assertThat(testDataSource).isNotNull();
-		log.info("Test datasource values -->{}", testDataSource);
-	}
 }
+
+//	@Test
+//	void readValuesFromPropertiesTest(){
+//
+//		assertThat(testDataSource).isNotNull();
+//		log.info("Test datasource values -->{}", testDataSource);
+//	}
+//}
