@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/posts")
+@RequestMapping("/")
 public class PostController {
 
     @Autowired
@@ -33,13 +33,13 @@ public class PostController {
         return "index";
     }
 
-    @GetMapping("/create")
+    @GetMapping("posts/create")
     public String getPostForm(Model model){
         model.addAttribute("error",false);
         return "create";
     }
 
-    @PostMapping("/save")
+    @PostMapping("posts/save")
     public String savePost(@ModelAttribute @Valid PostDto postDto, BindingResult result,  Model model){
         log.info("Post Dto received --> {}", postDto);
         if(result.hasErrors())
@@ -63,7 +63,7 @@ public class PostController {
         model.addAttribute("postDto", new PostDto());
     }
 
-    @GetMapping("/info/{postId}")
+    @GetMapping("posts/info/{postId}")
     public  String getPostDetails(@PathVariable("postId") Integer postId, Model model){
         log.info("request for a post path --> {}", postId);
 

@@ -90,7 +90,7 @@ public class PostServiceImpl implements PostService {
     public Post findById(Integer id) throws PostDoesNotExistEXception {
 
         if (id == null) {
-            throw new NullPointerException("Post Id cannot br null");
+            throw new NullPointerException("Post Id cannot be null");
         }
         Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {
